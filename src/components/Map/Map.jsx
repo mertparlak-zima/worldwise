@@ -1,7 +1,5 @@
-import style from "./Map.module.css";
+import { mapContainer } from "./Map.module.css";
 
-function Map() {
-  return <div>map</div>;
+export default function Map() {
+  return <div className={mapContainer}></div>;
 }
-
-export default Map;
