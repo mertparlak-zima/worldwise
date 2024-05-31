@@ -1,4 +1,4 @@
-import { nav } from "./index.module.css";
+import { nav } from "./AppNav.module.css";
 
 function AppNav() {
   return <div className={nav}>app nav</div>;
