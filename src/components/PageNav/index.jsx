@@ -5,7 +5,7 @@ function PageNav() {
   return (
     <nav className={styles.nav}>
       <Logo />
-      <NavLink to="/">Pricing</NavLink>
+      <NavLink to="/pricing">Pricing</NavLink>
       <NavLink to="/product">Product</NavLink>
       <NavLink to="/login">Login</NavLink>
     </nav>
