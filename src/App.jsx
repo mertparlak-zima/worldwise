@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Pricing from "./pages/Pricing";
 import CityList from "./components/CityList/CityList";
 import { useEffect, useState } from "react";
+import CountryList from "./components/CountryList/CountryList";
 
 const FAKE_DATA = [
   {
@@ -86,7 +87,10 @@ function App() {
               path="cities"
               element={<CityList cities={cities} isLoading={isLoading} />}
             />
-            <Route path="countries" element={<div>countries</div>} />
+            <Route
+              path="countries"
+              element={<CountryList cities={cities} isLoading={isLoading} />}
+            />
             <Route path="form" element={<div>form</div>} />
           </Route>
           <Route path="*" element={<PageNotFound />} />

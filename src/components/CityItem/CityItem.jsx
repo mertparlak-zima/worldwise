@@ -7,10 +7,10 @@ const formatDate = (date) =>
     year: "numeric",
     weekday: "long",
   }).format(new Date(date));
-export default function CityItem({ city, key }) {
+export default function CityItem({ city }) {
   const { cityName, emoji: cityEmoji, date: cityDate } = city;
   return (
-    <li className={cityItem} key={key}>
+    <li className={cityItem}>
       <span className={emoji}>{cityEmoji}</span>
       <h3 className={name}>{cityName}</h3>
       <time className={date}>({formatDate(cityDate)})</time>
