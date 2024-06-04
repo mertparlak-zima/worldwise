@@ -14,37 +14,25 @@ import { CitiesProvider } from "./contexts/CitiesContext";
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Homepage />} />
-          <Route path="product" element={<Product />} />
-          <Route path="pricing" element={<Pricing />} />
-          <Route path="login" element={<Login />} />
-          <Route path="app" element={<AppLayout />}>
-            <Route index element={<Navigate to="cities" replace={true} />} />
-            <Route
-              path="cities"
-              element={
-                <CitiesProvider>
-                  <CityList />
-                </CitiesProvider>
-              }
-            />
+      <CitiesProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<Homepage />} />
+            <Route path="product" element={<Product />} />
+            <Route path="pricing" element={<Pricing />} />
+            <Route path="login" element={<Login />} />
+            <Route path="app" element={<AppLayout />}>
+              <Route index element={<Navigate to="cities" replace={true} />} />
+              <Route path="cities" element={<CityList />} />
 
-            <Route path="cities/:id" element={<City />} />
-            <Route
-              path="countries"
-              element={
-                <CitiesProvider>
-                  <CountryList />
-                </CitiesProvider>
-              }
-            />
-            <Route path="form" element={<Form />} />
-          </Route>
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
+              <Route path="cities/:id" element={<City />} />
+              <Route path="countries" element={<CountryList />} />
+              <Route path="form" element={<Form />} />
+            </Route>
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </CitiesProvider>
     </>
   );
 }

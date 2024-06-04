@@ -1,5 +1,13 @@
 import { Link } from "react-router-dom";
-import { cityItem, emoji, name, date, deleteBtn } from "./CityItem.module.css";
+import {
+  cityItem,
+  emoji,
+  name,
+  date,
+  deleteBtn,
+  cityItemActive,
+} from "./CityItem.module.css";
+import { useCities } from "../../contexts/CitiesContext";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -10,11 +18,12 @@ const formatDate = (date) =>
   }).format(new Date(date));
 export default function CityItem({ city }) {
   const { cityName, emoji: cityEmoji, date: cityDate, position, id } = city;
+  const { currentCity } = useCities();
 
   return (
     <li>
       <Link
-        className={cityItem}
+        className={`${cityItem} ${currentCity.id === id ? cityItemActive : ""}`}
         to={`${id}?lat=${position.lat}&lng=${position.lng}`}
       >
         <span className={emoji}>{cityEmoji}</span>
