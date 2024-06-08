@@ -17,7 +17,7 @@ import { useUrlPosition } from "../../hooks/useUrlPosition";
 
 export default function Map() {
   const { cities } = useCities();
-  const [mapPosition, setmapPosition] = useState([0, 0]);
+  const [mapPosition, setmapPosition] = useState([38, 35]);
 
   const [mapLat, mapLng] = useUrlPosition();
 
