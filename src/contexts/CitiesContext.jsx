@@ -114,6 +114,9 @@ function CitiesProvider({ children }) {
     try {
       event.preventDefault();
       setIsLoading(true);
+      // await fetch(`${URL}/${id}`, {
+      //   method: "DELETE",
+      // });
 
       setCities((cities) => cities.filter((city) => city.id !== id));
     } catch (error) {
