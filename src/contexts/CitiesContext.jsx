@@ -1,6 +1,50 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useEffect, useContext, useReducer } from "react";
 
 const CitiesContext = createContext();
+
+function reducer(state, action) {
+  try {
+    switch (action.type) {
+      case "loading":
+        return { ...state, isLoading: true };
+
+      case "cities/loaded":
+        return { ...state, isLoading: false, cities: action.payload };
+
+      case "city/created":
+        return {
+          ...state,
+          isLoading: false,
+          cities: [...state.cities, action.payload],
+        };
+
+      case "city/deleted":
+        return {
+          ...state,
+          isLoading: false,
+          cities: state.cities.filter((city) => city.id !== action.payload),
+        };
+
+      case "city/loaded":
+        return { ...state, isLoading: false, currentCity: action.payload };
+
+      case "rejected":
+        return { ...state, isLoading: false, error: action.payload };
+
+      default:
+        throw new Error("Action type not found");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+const initialState = {
+  cities: [],
+  isLoading: false,
+  currentCity: {},
+  error: null,
+};
 
 function CitiesProvider({ children }) {
   const FAKE_DATA = [
@@ -44,9 +88,10 @@ function CitiesProvider({ children }) {
 
   const URL = "http://localhost:9000";
 
-  const [cities, setCities] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentCity, setCurrentCity] = useState({});
+  const [{ cities, isLoading, currentCity }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   useEffect(function () {
     async function fetchCities() {
@@ -55,11 +100,10 @@ function CitiesProvider({ children }) {
         // const response = await fetch(`${URL}/cities`);
         // const data = await response.json();
         // setCities(data);
-        setCities(FAKE_DATA);
+        dispatch({ type: "cities/loaded", payload: FAKE_DATA });
       } catch (error) {
         console.error(error);
-      } finally {
-        setIsLoading(false);
+        dispatch({ type: "rejected", payload: error });
       }
     }
     fetchCities();
@@ -84,14 +128,13 @@ function CitiesProvider({ children }) {
       if (city.id === Number(id)) {
         if (!city) return;
 
-        setCurrentCity(city);
+        dispatch({ type: "city/loaded", payload: city });
       }
     });
   }
 
   async function createCity(newCity) {
     try {
-      setIsLoading(true);
       // const response = await fetch(`${URL}/cities`, {
       //   method: "POST",
       //   body: JSON.stringify(newCity),
@@ -101,28 +144,26 @@ function CitiesProvider({ children }) {
       // });
 
       // setCities((cities) => [...cities, newCity]);
-      setCities((cities) => [...cities, newCity]);
+      dispatch({ type: "city/created", payload: newCity });
+
       console.log(cities);
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsLoading(false);
+      dispatch({ type: "rejected", payload: error });
     }
   }
 
   async function deleteCity(event, id) {
     try {
       event.preventDefault();
-      setIsLoading(true);
       // await fetch(`${URL}/${id}`, {
       //   method: "DELETE",
       // });
 
-      setCities((cities) => cities.filter((city) => city.id !== id));
+      dispatch({ type: "city/deleted", payload: id });
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsLoading(false);
+      dispatch({ type: "rejected", payload: error });
     }
   }
 
