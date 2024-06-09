@@ -1,4 +1,4 @@
-import { createContext, useEffect, useContext, useReducer } from "react";
+import { createContext, useEffect, useContext, useReducer, act } from "react";
 
 const CitiesContext = createContext();
 
@@ -16,6 +16,7 @@ function reducer(state, action) {
           ...state,
           isLoading: false,
           cities: [...state.cities, action.payload],
+          currentCity: action.payload,
         };
 
       case "city/deleted":
