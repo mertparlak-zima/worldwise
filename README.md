@@ -1,3 +1,3 @@
 Worldwise app
 
-www.worldwise.zima.works
+https://worldwise.zima.works
