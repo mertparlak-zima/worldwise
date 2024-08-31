@@ -41,7 +41,6 @@ function Form() {
   const [mapLat, mapLng] = useUrlPosition();
   const [emoji, setEmoji] = useState("");
   const [geoCodingError, setGeoCodingError] = useState("");
-  const naviagate = useNavigate();
 
   const [isLoadingGeoLocation, setIsLoadingGeoLocation] = useState(false);
 
