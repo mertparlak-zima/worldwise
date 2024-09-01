@@ -149,8 +149,6 @@ function CitiesProvider({ children }) {
 
       // setCities((cities) => [...cities, newCity]);
       dispatch({ type: "city/created", payload: newCity });
-
-      console.log(cities);
     } catch (error) {
       console.error(error);
       dispatch({ type: "rejected", payload: error });

@@ -19,7 +19,7 @@ function reducer(state, action) {
         throw new Error("Action type not found");
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 

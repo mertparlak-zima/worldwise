@@ -58,8 +58,6 @@ function Form() {
           );
           const data = await response.json();
 
-          console.log(data);
-
           if (!data.countryCode) {
             throw new Error(
               "Country code not found, please click on the map to select a another location."
@@ -95,7 +93,6 @@ function Form() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(e);
 
     if (!cityName || !date) return;
 
