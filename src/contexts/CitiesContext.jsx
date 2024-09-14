@@ -1,4 +1,10 @@
-import { createContext, useEffect, useContext, useReducer, act } from "react";
+import {
+  createContext,
+  useEffect,
+  useContext,
+  useReducer,
+  useCallback,
+} from "react";
 
 const CitiesContext = createContext();
 
@@ -111,31 +117,34 @@ function CitiesProvider({ children }) {
     fetchCities();
   }, []);
 
-  async function getCity(id) {
-    if (Number(id) === currentCity.id) return;
+  const getCity = useCallback(
+    async function getCity(id) {
+      // if (Number(id) === currentCity.id) return;
 
-    //  function fetchCities() {
-    //   try {
-    //     setIsLoading(true);
-    //     const response = await fetch(`${URL}/${id}`);
-    //     const data = await response.json();
-    //     setCurrentCity(data);
-    //   } catch (error) {
-    //     console.error(error);
-    //   } finally {
-    //     setIsLoading(false);
-    //   }
-    // }
-    // fetchCities();
+      // dispatch({ type: "loading" });
 
-    const x = cities.find((city) => {
-      if (city.id === Number(id)) {
-        if (!city) return;
+      // try {
+      //   const res = await fetch(`${URL}/cities/${id}`);
+      //   const city = await res.json();
+      //   dispatch({ type: "city/loaded", payload: city });
+      // } catch (error) {
+      //   dispatch({
+      //     type: "rejected",
+      //     payload: "There was an error loading the city...",
+      //   });
+      // }
 
-        dispatch({ type: "city/loaded", payload: city });
-      }
-    });
-  }
+      const x = cities.find((city) => {
+        if (city.id === Number(id)) {
+          if (!city) return;
+
+          dispatch({ type: "city/loaded", payload: city });
+        }
+      });
+    },
+    // [currentCity.id]
+    [cities]
+  );
 
   async function createCity(newCity) {
     try {
